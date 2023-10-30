@@ -1,0 +1,15 @@
+package rules
+
+import java.util.Date;
+
+rule "La administradora de pensión 'AFP003 - Colpensiones' y la fecha de afiliación es menor a 2021/01/01" 
+	//salience 10
+	when
+		$administradoraPension: String(this == "AFP003 - Colpensiones") from $FormularioBean.getAdministradoraPension()
+		
+		$fechaAfiliacionPension: Date(this < "13/10/2023" from java.text.SimpleDateFormat("dd/MM/yyyy"))
+		
+	then
+		formularioBean.setValido(false);
+		System.out.println("Condición 1 cumplida");
+end

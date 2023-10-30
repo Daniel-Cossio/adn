@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>HOME</title>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+		crossorigin="anonymous" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet"
+		href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</h:head>
+<h:body>
+	<h:form class="container">
+		
+		<h:outputLabel style="display: block; width:100%; text-align:center;" value="ADN Arus" />
+		<br />
+		<h:outputLabel for="tipoDocumento" value="Tipo de documento: " />
+		<h:selectOneMenu id="tipoDocumento"
+			value="#{formulariobean.tipoDocumento}" class="form-select">
+			<f:selectItems value="#{formulariobean.opcionesTipoDocumento}" />
+
+		</h:selectOneMenu>
+		<br />
+
+		<h:outputLabel for="numeroDocumento" value="Número de documento: " />
+		<h:inputText id="numeroDocumento"
+			value="#{formulariobean.numeroDocumento}" class="form-control">
+			<f:validator validatorId="validatorTipoDocumento" />
+		</h:inputText>
+		
+		<h:message for="numeroDocumento" style="color: red" />
+
+		<br />
+		<h:outputLabel for="primerNombre" value="Primer nombre: " />
+		<h:inputText id="primerNombre" value="#{formulariobean.primerNombre}"
+			class="form-control">
+			<f:validator validatorId="validatorSoloTexto" />
+		</h:inputText>
+		
+		<h:message for="primerNombre" style="color: red" />
+		<br />
+
+
+		<h:outputLabel for="segundoNombre" value="Segundo nombre: " />
+		<h:inputText id="segundoNombre"
+			value="#{formulariobean.segundoNombre}" class="form-control">
+			<f:validator validatorId="validatorSoloTexto" />
+		</h:inputText>
+		
+		<h:message for="segundoNombre" style="color: red" />
+		<br />
+
+
+		<h:outputLabel for="primerApellido" value="Primer apellido: " />
+		<h:inputText id="primerApellido"
+			value="#{formulariobean.primerApellido}"
+			class="form-control">
+			<f:validator validatorId="validatorSoloTexto" />
+		</h:inputText>
+		
+		<h:message for="primerApellido" style="color: red" />
+		<br />
+
+		<h:outputLabel for="segundoApellido" value="Segundo apellido: " />
+		<h:inputText id="segundoApellido"
+			value="#{formulariobean.segundoApellido}" class="form-control">
+			<f:validator validatorId="validatorSoloTexto" />
+		</h:inputText>
+	
+		<h:message for="segundoApellido" style="color: red" />
+		<br />
+
+
+		<h:outputLabel for="administradoraSalud"
+			value="Administradora de salud: " />
+		<h:selectOneMenu id="administradoraSalud"
+			value="#{formulariobean.administradoraSalud}" class="form-select">
+			<f:selectItems value="#{formulariobean.opcionesAdministradoraSalud}" />
+		</h:selectOneMenu>
+		<br />
+		<h:inputText id="fechaAfiliacionSalud"
+			value="#{formulariobean.fechaAfiliacionSalud}"
+			class="datepicker form-control" converter="dateConverter" required="true"/>
+		<h:message for="fechaAfiliacionSalud" style="color: red" />
+		<br />
+
+		<h:outputLabel for="administradoraPension"
+			value="Administradora de pension: " />
+		<h:selectOneMenu id="administradoraPension"
+			value="#{formulariobean.administradoraPension}" class="form-select">
+			<f:selectItems
+				value="#{formulariobean.opcionesAdministradoraPension}" />
+		</h:selectOneMenu>
+		<br />
+
+		<h:inputText id="fechaAfiliacionPension"
+			value="#{formulariobean.fechaAfiliacionPension}"
+			class="datepicker form-control" converter="dateConverter" required="true"/>
+
+		<h:message for="fechaAfiliacionPension" style="color: red" />
+
+		<br />
+
+		<h:commandButton value="Enviar" action="#{formulariobean.Enviar}"
+			class="btn  btn-primary" />
+
+	</h:form>
+
+
+	<script>
+    $(function() {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+    });
+</script>
+
+
+</h:body>
+</html>
