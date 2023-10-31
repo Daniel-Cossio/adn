@@ -1,14 +1,14 @@
 package beans;
 
-
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
@@ -18,14 +18,11 @@ import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
-
-
-@ManagedBean(value = "formulariobean")
-@RequestScoped
+@ManagedBean(name = "formulariobean")
+@SessionScoped
 public class FormularioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 
 	private List<String> opcionesTipoDocumento = Arrays.asList("CC", "CE", "RC", "TI");
 	private List<String> opcionesAdministradoraSalud = Arrays.asList("EPS001 - Sanitas EPS", "EPS002 - Sura EPS",
@@ -45,6 +42,7 @@ public class FormularioBean implements Serializable {
 	private Date fechaAfiliacionPension;
 
 	private boolean valido = false;
+	private String excepcion;
 
 	public boolean isValido() {
 		return valido;
@@ -161,92 +159,45 @@ public class FormularioBean implements Serializable {
 		this.opcionesAdministradoraPension = opcionesAdministradoraPension;
 	}
 
+	public String getExcepcion() {
+		return excepcion;
+	}
+
+	public void setExcepcion(String excepcion) {
+		this.excepcion = excepcion;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	public void Enviar() {
-		System.out.println("Formulario Enviado. ");
+		valido=false;
+		excepcion="";
 		KnowledgeBuilder builder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-		/*
-		 * builder.add(ResourceFactory.newClassPathResource("rules/Afiliado.drl"),
-		 * ResourceType.DRL); if (builder.hasErrors()) { throw new
-		 * RuntimeException(builder.getErrors().toString()); } KnowledgeBase
-		 * knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
-		 * knowledgeBase.addKnowledgePackages(builder.getKnowledgePackages());
-		 * StatefulKnowledgeSession session =
-		 * knowledgeBase.newStatefulKnowledgeSession();
-		 */
-		System.out.println("Aplicando reglas");
-		//session.insert(afiliado);
-		//session.fireAllRules();
-		//session.dispose();
 
+		builder.add(ResourceFactory.newClassPathResource("rules/reglas.drl"), ResourceType.DRL);
+
+		if (builder.hasErrors()) {
+
+			throw new RuntimeException(builder.getErrors().toString());
+		}
+		KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
+		knowledgeBase.addKnowledgePackages(builder.getKnowledgePackages());
+		StatefulKnowledgeSession session = knowledgeBase.newStatefulKnowledgeSession();
 		
-		
-		/*
-		 * System.out.println("Formulario Enviado. "); KieSession kieSession =
-		 * DroolsConfig.getKieSession();
-		 * 
-		 * System.out.println("Sesión obtenida "); // Inserta los hechos (objetos) en la
-		 * sesión de reglas //kieSession.insert(fact1); //kieSession.insert(fact2);
-		 * kieSession.insert(fechaAfiliacionPension);
-		 * kieSession.insert(administradoraPension); // Ejecuta las reglas de negocio
-		 * kieSession.fireAllRules();
-		 * 
-		 * // Realiza cualquier acción adicional necesaria // ...
-		 * 
-		 * // Cierra la sesión de reglas kieSession.dispose();
-		 * 
-		 * 
-		 * 
-		 * 
-		 * KnowledgeBuilder builder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-		 * builder.add(ResourceFactory .newClassPathResource("rules/Afiliado.drl"),
-		 * ResourceType.DRL); if (builder.hasErrors()) { throw new
-		 * RuntimeException(builder.getErrors().toString()); } KnowledgeBase
-		 * knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
-		 * knowledgeBase.addKnowledgePackages(builder.getKnowledgePackages());
-		 * StatefulKnowledgeSession session =
-		 * knowledgeBase.newStatefulKnowledgeSession(); session.insert(afiliado);
-		 * session.fireAllRules(); session.dispose();
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * try {
-		 * 
-		 * // Insertar la fecha en la sesión de reglas FactHandle fechaHandle =
-		 * kieSession.insert(fechaAfiliacionPension); FactHandle pensionHandle =
-		 * kieSession.insert(administradoraPension);
-		 * 
-		 * // Ejecutar las reglas int rulesFired = kieSession.fireAllRules();
-		 * 
-		 * if (rulesFired > 0) { System.out.println("Fecha incorrecta. "); } else {
-		 * System.out.println("Null"); }
-		 * 
-		 * // Retirar el hecho de la sesión de reglas kieSession.delete(fechaHandle);
-		 * kieSession.delete(pensionHandle); } catch (Exception e) {
-		 * System.out.println("Fecha no válida. "); }
-		 */
-		/*
-		 * System.out.println("Formulario Enviado. ");
-		 * System.out.println("Tipo documento: " + tipoDocumento);
-		 * System.out.println("Numero documento: " + numeroDocumento);
-		 * System.out.println("Primer nombre: " + primerNombre);
-		 * System.out.println("Segundo nombre: " + segundoNombre);
-		 * System.out.println("Primer apellido: " + primerApellido);
-		 * System.out.println("Segundo apellido: " + segundoApellido);
-		 * System.out.println("Administradora Salud: " + administradoraSalud);
-		 * System.out.println("Fecha afiliacion Salud: " + fechaAfiliacionSalud);
-		 * System.out.println("Administradora Pension: " + administradoraPension);
-		 * System.out.println("Fecha afiliacion Pension: " + fechaAfiliacionPension);
-		 */
+		session.insert(this);
+		int rulesFired = session.fireAllRules();
+		session.dispose();
+		if (rulesFired == 0) {
+			valido = true;
+			excepcion = "El registro ha sido exitoso";
+
+		}
+	
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, excepcion, excepcion));
 	}
+
 }

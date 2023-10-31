@@ -18,21 +18,4 @@
 			<var>msgs</var>
 		</resource-bundle>
 	</application>
-	<managed-bean>
-		<managed-bean-name>formulariobean</managed-bean-name>
-		<managed-bean-class>beans.FormularioBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<faces-config>
-		<validator>
-			<validator-id>validatorTipoDocumento</validator-id>
-			<validator-class>validators.ValidadorTipoDocumento</validator-class>
-		</validator>
-	</faces-config>
-	<faces-config>
-		<validator>
-			<validator-id>validatorSoloTexto</validator-id>
-			<validator-class>validators.ValidatorSoloTexto</validator-class>
-		</validator>
-	</faces-config>
 </faces-config>

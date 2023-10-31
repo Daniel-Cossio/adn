@@ -1,0 +1,35 @@
+package rules
+
+import java.text.SimpleDateFormat;
+import beans.FormularioBean;
+
+rule "La administradora de pension 'AFP003 - Colpensiones' y la fecha de afiliacion es menor a 2021/01/01" 
+	when
+		
+		$formularioBean: FormularioBean( administradoraPension == "AFP003 - Colpensiones",
+										fechaAfiliacionPension < new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2021"))
+	then
+		$formularioBean.setValido(false);
+		$formularioBean.setExcepcion("Para la administradora de pensión AFP003 solo es posible afiliarse después de  2020/12/31");
+end
+
+rule "El tipo de documento 'RC' Registro civil, y con las administradoras de 'EPS003 - Coomeva' ó 'EPS004 - Medimas'" 
+	when
+		
+		$formularioBean: FormularioBean(tipoDocumento == "RC",
+										administradoraSalud =="EPS003 - Coomeva" || administradoraSalud =="EPS004 - Medimas")
+	then
+		$formularioBean.setValido(false);
+		$formularioBean.setExcepcion("Para una persona con tipo de documento 'RC' (Registro civil) no es permitido afiliarse a las EPS: EPS003 - Coomeva, EPS004 - Medimas");
+end
+
+rule "La administradora de salud 'EPS002 - Sura EPS' y la administradora de pensión es diferente de 'AFP001 - Protección'" 
+	when
+		
+		$formularioBean: FormularioBean(administradoraSalud == "EPS002 - Sura EPS",
+										administradoraPension !="EPS003 - Coomeva")
+	then
+		$formularioBean.setValido(false);
+		$formularioBean.setExcepcion("Las personas que se afilien a la administradora 'EPS002 - Sura EPS' solo pueden afiliarse a la administradora de pensión 'AFP001 - Protección'");
+end
+
