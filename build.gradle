@@ -30,7 +30,8 @@ dependencies {
 	compileOnly 'javax:javaee-api:7.0'	
 	implementation ('org.drools:drools-core:5.2.0.Final')
     implementation ('org.drools:drools-compiler:5.2.0.Final')
-    
+    //implementation ('javax.ws.rs:javax.ws.rs-api:2.1.1')
+    //implementation ('jakarta.ws.rs:jakarta.ws.rs-api:2.1.4')
 }
 
 // Define the main class for the application

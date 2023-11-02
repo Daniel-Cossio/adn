@@ -27,7 +27,7 @@ rule "La administradora de salud 'EPS002 - Sura EPS' y la administradora de pens
 	when
 		
 		$formularioBean: FormularioBean(administradoraSalud == "EPS002 - Sura EPS",
-										administradoraPension !="EPS003 - Coomeva")
+										administradoraPension !="AFP001 - Proteccion")
 	then
 		$formularioBean.setValido(false);
 		$formularioBean.setExcepcion("Las personas que se afilien a la administradora 'EPS002 - Sura EPS' solo pueden afiliarse a la administradora de pensión 'AFP001 - Protección'");

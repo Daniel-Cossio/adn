@@ -18,6 +18,8 @@ import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
+import controller.FormularioController;
+
 @ManagedBean(name = "formulariobean")
 @SessionScoped
 public class FormularioBean implements Serializable {
@@ -191,8 +193,11 @@ public class FormularioBean implements Serializable {
 		session.dispose();
 		if (rulesFired == 0) {
 			valido = true;
+			FormularioController formularioController = new FormularioController();
+			System.out.println("Enviando formulario");
+			formularioController.EnviarFormulario(this);
+			System.out.println("Formulario enviado");
 			excepcion = "El registro ha sido exitoso";
-
 		}
 	
 		FacesContext context = FacesContext.getCurrentInstance();
