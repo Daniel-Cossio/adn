@@ -18,9 +18,9 @@ public class ValidatorSoloTexto implements Validator {
 
 		String textoIngresado = (String) value;
 		if (textoIngresado != null && !textoIngresado.matches(LETRAS_REGEX)) {
-			 FacesMessage message = new FacesMessage(MENSAJE_SOLO_LETRAS);
-			 throw new ValidatorException(message);
-			 }
+			FacesMessage message = new FacesMessage(MENSAJE_SOLO_LETRAS);
+			throw new ValidatorException(message);
+		}
 	}
 
 }

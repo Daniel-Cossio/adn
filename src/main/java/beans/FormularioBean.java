@@ -174,8 +174,8 @@ public class FormularioBean implements Serializable {
 	}
 
 	public void Enviar() {
-		valido=false;
-		excepcion="";
+		valido = false;
+		excepcion = "";
 		KnowledgeBuilder builder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 
 		builder.add(ResourceFactory.newClassPathResource("rules/reglas.drl"), ResourceType.DRL);
@@ -187,19 +187,18 @@ public class FormularioBean implements Serializable {
 		KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
 		knowledgeBase.addKnowledgePackages(builder.getKnowledgePackages());
 		StatefulKnowledgeSession session = knowledgeBase.newStatefulKnowledgeSession();
-		
+
 		session.insert(this);
 		int rulesFired = session.fireAllRules();
 		session.dispose();
 		if (rulesFired == 0) {
 			valido = true;
 			FormularioController formularioController = new FormularioController();
-			System.out.println("Enviando formulario");
-			formularioController.EnviarFormulario(this);
+			formularioController.enviarFormulario(this);
 			System.out.println("Formulario enviado");
 			excepcion = "El registro ha sido exitoso";
 		}
-	
+
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, excepcion, excepcion));
