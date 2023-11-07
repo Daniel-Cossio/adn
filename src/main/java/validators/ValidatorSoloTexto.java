@@ -10,7 +10,7 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("validatorSoloTexto")
 public class ValidatorSoloTexto implements Validator {
 
-	private static final String LETRAS_REGEX = "^[a-zA-Z]+$";
+	private static final String LETRAS_REGEX = "^[a-zA-ZáéíóúüÁÉÍÓÚÜ]+$";
 	private static final String MENSAJE_SOLO_LETRAS = "El campo solo puede contener letras";
 
 	@Override
